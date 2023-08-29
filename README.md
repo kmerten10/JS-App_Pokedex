@@ -1,0 +1,1 @@
+Webpage indexes Pokemon characters using JS
