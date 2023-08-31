@@ -44,6 +44,8 @@ let pokemonRepository = (function () {
         button.addEventListener('submit', function (event) {
             event.preventDefault();
         });
+
+
         button.innerText = pokemon.name;
         button.setAttribute("data-target", "#modal-container");
         button.setAttribute("data-toggle", "modal");
