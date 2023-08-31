@@ -1,10 +1,12 @@
+//Iife + defines variables
 let pokemonRepository = (function () {
     let pokemonList = [];
     let modalContainer=document.querySelector('#modal-container');
 
-//     //Link to access Pokemon API
+//Link to access Pokemon API
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
+//Determines if data qualifies as a pokemon
     function add(pokemon) {
         if (
             typeof pokemon === "object" &&
@@ -13,9 +15,10 @@ let pokemonRepository = (function () {
             pokemonList.push(pokemon);
         } else {
             console.log("pokemon is not correct");
-        }
-    }
+        };
+    };
 
+//Sorts pokemon names alphabetically using an api
     function compareByName(a, b) {
         const nameA = a.name;
         const nameB = b.name;
@@ -34,7 +37,7 @@ let pokemonRepository = (function () {
     }
     
 
-//Creates a list of Pokemon buttons
+//Creates a list of Pokemon buttons from the pokemonList
     function addListItem(pokemon) {
         let pokemonList = document.querySelector(".pokemon-list");
         let listPokemon = document.createElement('li');
@@ -56,7 +59,7 @@ let pokemonRepository = (function () {
     }
 
 
-
+//defines pokemon variable & ???
     function loadList() {
         return fetch(apiUrl).then(function (response) {
             return response.json();
@@ -75,8 +78,8 @@ let pokemonRepository = (function () {
     }
 
 
-
-    function loadDetails(item) {
+//fetches pokemon data from api
+    function loadDetails(item) { //why does this need to be named something other than pokemon?
         let url = item.detailsUrl;
         return fetch(url).then(function(response){
             return response.json();
@@ -90,19 +93,14 @@ let pokemonRepository = (function () {
 
             item.types = details.types.map((type)=>type.type.name);
 
-            
-            
                 } 
                 ).catch(function (e) {
                 console.error(e);
-             });
- 
-            
+             });      
     }
 
 
-    //Displays the Modal with Pokemon details
-    //creates a modal element
+    //Creates and displays the Modal with Pokemon details
     function showModal (pokemon) {
         pokemonRepository.loadDetails(pokemon).then(function(){
             let modalTitle = document.querySelector('.modal-title');
