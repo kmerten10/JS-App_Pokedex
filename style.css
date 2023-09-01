@@ -23,7 +23,13 @@ h1.header {
    text-align: center;
    font-family: "PocketMonk";
    background-color: #3D7DCA;
-   width: 100%;
+   width: 50%;
+   margin-left: auto;
+   margin-right: auto;
+   border: 2px solid #003A70;
+   border-radius: 100px;
+   width: 95%;
+   margin-top: 30px;
 }
 
 .button-class {
@@ -42,12 +48,23 @@ h1.header {
     color: black;
     border: 2px solid #fff;
     text-transform: capitalize;
+    border-radius: 20px;
   }
 
   .button-class:hover{
-    background-color:  #c7a008;
-    border: 2px solid #3c5aa6;
+    background-color: #c7a008;
+    border: 2px solid white;
+    box-shadow: 0 0 10px 10px #ffcb05;
+    transition-timing-function: ease-in-out;
+    transition-duration: .5s;
   }
+
+  .btn-outline-success {
+    color: #fff;
+    background-color: #CE2211;
+    border: none;
+  };
+
 
 .modal-close {
     float: right;
@@ -117,6 +134,12 @@ img {
   h1.header {
     font-size: 90px;
   }
+}
+
+.navbar {
+  border-radius: 100px;
+  margin-top: 30px;
+  border: 2px solid #CE2211;
 }
 
 @media all and (min-width: 700px) and (max-width: 1200px) {
