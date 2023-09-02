@@ -33,6 +33,9 @@
                 <a class="nav-link" href="types.html">Types</a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="abilities.html">Abilities</a>
+            </li>
 
         </ul>
 
@@ -44,12 +47,18 @@
 </nav>
 
 <body>
-
+<div class="header-container">
     <h1 class="header">Pokemon Types</h1>
+</div>
+    <div align="center">
     <select id="types-select" class="form-select">
-        <option>Select a Type</option>
+        <option >Select a Type</option>
     </select>
-
+</div>
+<div class="pikachu-container">
+    <img id="move-box" class="charmander" src="charmander.png">
+    <img id="pokeball-box" src="pokeball.png">
+    </div>
     <ul class="pokemon-list list-group"></ul>
 
     <div id="show-modal"></div>
@@ -82,6 +91,8 @@
     <script src="js/promise-polyfill.js"></script>
     <script src="js/fetch.umd.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/move.js"></script>
+    <script src="js/pokeball.js"></script>
 
     <script>
         pokemonRepository.loadTypesList().then(function () {

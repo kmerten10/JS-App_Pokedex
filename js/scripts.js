@@ -4,6 +4,7 @@ let pokemonRepository = (function () { //creates an Iife to "protect" variables 
 
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150'; //defines variable to pull in pokemon api
     let typesUrl = 'https://pokeapi.co/api/v2/type/?limit=150'; //defines variable that pulls in pokemon type api
+    let abilityUrl = 'https://pokeapi.co/api/v2/ability/?limit=150';
 
 
 //Determines if data qualifies as a pokemon; if yes, pokemon will be pushed onto the list
@@ -64,6 +65,15 @@ function addTypeOption(type) { //
     selectType.appendChild(typeOption); //appends the typeOption to the selectType element
 }   
 
+function addAbilityOption(ability) { // 
+    let selectAbility = document.querySelector("#ability-select"); //**finds the first types-select and defines the selectType variable
+    let abilityOption = document.createElement('option'); //creates an option element for the dropdown 
+    abilityOption.setAttribute("value", ability.url); // adds the type options to the dropdown 
+    abilityOption.innerText = ability.name; //adds inner text to the dropdown
+
+    selectAbility.appendChild(abilityOption); //appends the typeOption to the selectType element
+}   
+
 
 
 function loadList() { //
@@ -105,29 +115,28 @@ function loadTypesList() { //loads the list of types from the type api
     });
 }
 
-function loadPokemonTypes(typeurl) { //loads the pokemon names that fall within each applicable type
-    pokemonList = [];
-    let pokemonListHTML = document.querySelector(".pokemon-list");
-    pokemonListHTML.innerHTML=''; //clears the html / removes the descendants of the element pokemonlistHTML (i.e. pokemon-list) so that a new option can be selected each time
-    return fetch(typeurl).then(function (response) {  //fetches the typesUrl and returns a json response
+function loadAbilityList() { //loads the list of types from the type api
+    let selectAbility = document.querySelector("#ability-select"); //**creates an element out of the  types-select id
+    selectAbility.addEventListener('change',function(select){ //adds an event listener that changes upon select
+        loadPokemonAbility(select.target.value); //still unsure of why this is select.target.value and how this maps...
+    });
+
+    return fetch(abilityUrl).then(function (response) { //fetches the typesUrl and returns a json response
         return response.json(); //json response being returned
     }).then(function (json) { //parses json
-        json.pokemon.forEach(function (item) { //creates a loop for the json results that iterates over each item and defines a variable
-            let pokemon = { //defines pokemon based on the name and url properties from typesurl
-                name: item.pokemon.name, //associates pokemon name to pokemon variable just created
-                detailsUrl: item.pokemon.url //associates item url with pokemon variable
+        json.results.forEach(function (item) {  // creates a loop for the json results that iterates over each item and defines a variable
+            let ability = { //defines type based on the name and url properties 
+                name: item.name, //associates pokemon name to pokemon variable just created
+                url: item.url //associates item url with pokemon variable
             };
-            add(pokemon); //adds the pokemon to selected type
-            console.log(pokemon); //console logs pokemon details
+            addAbilityOption(ability); //adds the type to the dropdown list
+            console.log(ability); //console logs type details
         });
-        pokemonRepository.getAll().forEach(function (type) { //adds types to the pokemonRespository 
-            pokemonRepository.addListItem(type); //
-        });
-
     }).catch(function (e) { //throws an error if item does not have the details
         console.error(e); //console logs the error
     });
 }
+
 
 function loadDetails(item) { // 
         let url = item.detailsUrl;
@@ -153,6 +162,53 @@ function loadDetails(item) { //
             
     }
 
+    function loadPokemonTypes(typeurl) { //loads the pokemon names that fall within each applicable type
+        pokemonList = [];
+        let pokemonListHTML = document.querySelector(".pokemon-list");
+        pokemonListHTML.innerHTML=''; //clears the html / removes the descendants of the element pokemonlistHTML (i.e. pokemon-list) so that a new option can be selected each time
+        return fetch(typeurl).then(function (response) {  //fetches the typesUrl and returns a json response
+            return response.json(); //json response being returned
+        }).then(function (json) { //parses json
+            json.pokemon.forEach(function (item) { //creates a loop for the json results that iterates over each item and defines a variable
+                let pokemon = { //defines pokemon based on the name and url properties from typesurl
+                    name: item.pokemon.name, //associates pokemon name to pokemon variable just created
+                    detailsUrl: item.pokemon.url //associates item url with pokemon variable
+                };
+                add(pokemon); //adds the pokemon to selected type
+                console.log(pokemon); //console logs pokemon details
+            });
+            pokemonRepository.getAll().forEach(function (type) { //adds types to the pokemonRespository 
+                pokemonRepository.addListItem(type); //
+            });
+    
+        }).catch(function (e) { //throws an error if item does not have the details
+            console.error(e); //console logs the error
+        });
+    }
+
+    function loadPokemonAbility(abilityurl) { //loads the pokemon names that fall within each applicable type
+        pokemonList = [];
+        let pokemonListHTML = document.querySelector(".pokemon-list");
+        pokemonListHTML.innerHTML=''; //clears the html / removes the descendants of the element pokemonlistHTML (i.e. pokemon-list) so that a new option can be selected each time
+        return fetch(abilityurl).then(function (response) {  //fetches the typesUrl and returns a json response
+            return response.json(); //json response being returned
+        }).then(function (json) { //parses json
+            json.pokemon.forEach(function (item) { //creates a loop for the json results that iterates over each item and defines a variable
+                let pokemon = { //defines pokemon based on the name and url properties from typesurl
+                    name: item.pokemon.name, //associates pokemon name to pokemon variable just created
+                    detailsUrl: item.pokemon.url //associates item url with pokemon variable
+                };
+                add(pokemon); //adds the pokemon to selected type
+                console.log(pokemon); //console logs pokemon details
+            });
+            pokemonRepository.getAll().forEach(function (ability) { //adds types to the pokemonRespository 
+                pokemonRepository.addListItem(ability); //
+            });
+    
+        }).catch(function (e) { //throws an error if item does not have the details
+            console.error(e); //console logs the error
+        });
+    }
 
 
     function showModal (pokemon) { //creates a modal to display pokemon details on click of button
@@ -208,7 +264,6 @@ modalContainer.addEventListener('click', (e)=>{ //closes the modal on click
         hideModal();
     }
 });
-
    
 return { //returns the data of the functions// why is this necessary again?
     add: add,
@@ -217,6 +272,10 @@ return { //returns the data of the functions// why is this necessary again?
     loadList: loadList,
     loadDetails: loadDetails,
     loadTypesList: loadTypesList,
+    loadPokemonTypes: loadPokemonTypes,
+    loadAbilityList: loadAbilityList,
+    loadPokemonAbility: loadPokemonAbility,
+    
 };
 
 })();
