@@ -5,6 +5,7 @@ let pokemonRepository = (function () { //creates an Iife to "protect" variables 
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150'; //defines variable to pull in pokemon api
     let typesUrl = 'https://pokeapi.co/api/v2/type/?limit=150'; //defines variable that pulls in pokemon type api
     let abilityUrl = 'https://pokeapi.co/api/v2/ability/?limit=150';
+    let generationUrl = 'https://pokeapi.co/api/v2/generation/?limit=150';
 
 
 //Determines if data qualifies as a pokemon; if yes, pokemon will be pushed onto the list
@@ -74,6 +75,18 @@ function addAbilityOption(ability) { //
     selectAbility.appendChild(abilityOption); //appends the typeOption to the selectType element
 }   
 
+function addGenerationOption(generation) { // 
+    let selectGeneration = document.querySelector("#evolution"); //**finds the first types-select and defines the selectType variable
+    let generationOption = document.createElement('option'); //creates an option element for the dropdown 
+    let link = document.createElement("a");
+    link.setAttribute("value", generation.url); // adds the type options to the dropdown 
+    generationOption.innerText = generation.name; //adds inner text to the dropdown
+
+    generationOption.appendChild(link);
+
+    selectGeneration.appendChild(generationOption); //appends the typeOption to the selectType element
+}   
+
 
 
 function loadList() { //
@@ -137,6 +150,28 @@ function loadAbilityList() { //loads the list of types from the type api
     });
 }
 
+function loadGenerationList() { //loads the list of types from the type api
+    let selectGeneration = document.querySelector("#evolution"); //**creates an element out of the  types-select id
+    selectGeneration.addEventListener('change',function(select){ //adds an event listener that changes upon select
+        loadPokemonGeneration(select.target.value); //still unsure of why this is select.target.value and how this maps...
+    });
+
+    return fetch(generationUrl).then(function (response) { //fetches the typesUrl and returns a json response
+        return response.json(); //json response being returned
+    }).then(function (json) { //parses json
+        json.results.forEach(function (item) {  // creates a loop for the json results that iterates over each item and defines a variable
+            let generation = { //defines type based on the name and url properties 
+                name: item.name, //associates pokemon name to pokemon variable just created
+                url: item.url //associates item url with pokemon variable
+            };
+            addGenerationOption(generation); //adds the type to the dropdown list
+            console.log(generation); //console logs type details
+        });
+    }).catch(function (e) { //throws an error if item does not have the details
+        console.error(e); //console logs the error
+    });
+}
+
 
 function loadDetails(item) { // 
         let url = item.detailsUrl;
@@ -152,8 +187,6 @@ function loadDetails(item) { //
 
             item.types = details.types.map((type)=>type.type.name);
 
-            
-            
                 } 
                 ).catch(function (e) {
                 console.error(e);
@@ -203,6 +236,30 @@ function loadDetails(item) { //
             });
             pokemonRepository.getAll().forEach(function (ability) { //adds types to the pokemonRespository 
                 pokemonRepository.addListItem(ability); //
+            });
+    
+        }).catch(function (e) { //throws an error if item does not have the details
+            console.error(e); //console logs the error
+        });
+    }
+
+    function loadPokemonGeneration(generationUrl) { //loads the pokemon names that fall within each applicable type
+        pokemonList = [];
+        let pokemonListHTML = document.querySelector(".pokemon-list");
+        pokemonListHTML.innerHTML=''; //clears the html / removes the descendants of the element pokemonlistHTML (i.e. pokemon-list) so that a new option can be selected each time
+        return fetch(generationUrl).then(function (response) {  //fetches the typesUrl and returns a json response
+            return response.json(); //json response being returned
+        }).then(function (json) { //parses json
+            json.pokemon.forEach(function (item) { //creates a loop for the json results that iterates over each item and defines a variable
+                let pokemon = { //defines pokemon based on the name and url properties from typesurl
+                    name: item.pokemon_species.name, //associates pokemon name to pokemon variable just created
+                    detailsUrl: item.pokemon_species.url //associates item url with pokemon variable
+                };
+                add(pokemon); //adds the pokemon to selected type
+                console.log(pokemon); //console logs pokemon details
+            });
+            pokemonRepository.getAll().forEach(function (generation) { //adds types to the pokemonRespository 
+                pokemonRepository.addListItem(generation); //
             });
     
         }).catch(function (e) { //throws an error if item does not have the details
@@ -275,6 +332,8 @@ return { //returns the data of the functions// why is this necessary again?
     loadPokemonTypes: loadPokemonTypes,
     loadAbilityList: loadAbilityList,
     loadPokemonAbility: loadPokemonAbility,
+    loadGenerationList: loadGenerationList,
+    loadPokemonGeneration: loadPokemonGeneration,
     
 };
 
