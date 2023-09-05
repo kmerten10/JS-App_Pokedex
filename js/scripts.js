@@ -77,10 +77,10 @@ function addAbilityOption(ability) { //
 
 function addGenerationOption(generation) { // 
     let selectGeneration = document.querySelector("#evolution"); //**finds the first types-select and defines the selectType variable
-    let generationOption = document.createElement('option'); //creates an option element for the dropdown 
+    let generationOption = document.createElement('span'); //creates an option element for the dropdown 
     let link = document.createElement("a");
-    link.setAttribute("value", generation.url); // adds the type options to the dropdown 
-    generationOption.innerText = generation.name; //adds inner text to the dropdown
+    link.setAttribute("href", generation.url); // adds the type options to the dropdown 
+    link.innerText = generation.name; //adds inner text to the dropdown
 
     generationOption.appendChild(link);
 
@@ -151,9 +151,9 @@ function loadAbilityList() { //loads the list of types from the type api
 }
 
 function loadGenerationList() { //loads the list of types from the type api
-    let selectGeneration = document.querySelector("#evolution"); //**creates an element out of the  types-select id
-    selectGeneration.addEventListener('change',function(select){ //adds an event listener that changes upon select
-        loadPokemonGeneration(select.target.value); //still unsure of why this is select.target.value and how this maps...
+    let selectGeneration = document.querySelector("#evolution");
+    selectGeneration.addEventListener('show.bs.dropdown', function(div){
+        loadPokemonGeneration(div.target.value);
     });
 
     return fetch(generationUrl).then(function (response) { //fetches the typesUrl and returns a json response

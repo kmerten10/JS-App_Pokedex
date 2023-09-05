@@ -45,6 +45,11 @@ body {
   box-shadow: 0 0 10px 10px #CE2211;
 }
 
+.dropdown-item {
+  display: flex;
+  flex-direction: column;
+}
+
 #types-select {
   font-size: 20px;
   text-align: center;
