@@ -37,7 +37,15 @@
                 <a class="nav-link" href="abilities.html">Abilities</a>
             </li>
 
-
+            <li class="nav-item dropdown">
+                <div class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Generation
+                </div>
+                
+                <div id="evolution" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div class="dropdown-item"></div>
+                </div>
+              </li>
         </ul>
 
         <form class="form-inline my-2 my-lg-0">
@@ -102,6 +110,17 @@
         });
 
     </script>
+
+
+<script>
+    pokemonRepository.loadGenerationList().then(function () {
+        pokemonRepository.getAll().forEach(function (generation) {
+            pokemonRepository.addListItem(generation);
+        });
+    });
+
+</script>
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>

@@ -8,7 +8,9 @@ let pokemonRepository = (function () { //creates an Iife to "protect" variables 
     let generationUrl = 'https://pokeapi.co/api/v2/generation/?limit=150';
 
 
-//Determines if data qualifies as a pokemon; if yes, pokemon will be pushed onto the list
+
+
+    //Determines if data qualifies as a pokemon; if yes, pokemon will be pushed onto the list
     function add(pokemon) { 
         if (
             typeof pokemon === "object" &&
@@ -43,16 +45,15 @@ function addListItem(pokemon) { //Creates a list of Pokemon buttons
     listPokemon.classList.add('list-group-item'); //adds the 'list-group-item' class to the listPokemon variable 
     let button = document.createElement('button');  //creates a button element
     button.classList.add('btn', 'btn-primary'); // adds the 'btn' 'btm-primary' class to the button variable that was just created because it's created in JS "it doesn't exist in html"
-    button.addEventListener('submit', function (event) {  //adds an event listener to the submit event -- why do we need this?    
-        event.preventDefault(); //prevents form from submitting
-    });
+
     button.innerText = pokemon.name; //adds text to button
     button.setAttribute("data-target", "#modal-container"); //add the 'data-target' class to the modal-container
     button.setAttribute("data-toggle", "modal"); //add the 'data-toggle' class to the modal-container
     button.classList.add("button-class"); //adds the button-class to the button variable
     listPokemon.appendChild(button); //appends the listPokemon to the button element
     pokemonList.appendChild(listPokemon); //appends the pokemonList to the listPokemon element that was just created
-    button.addEventListener("click", function(){ //adds an events listener to the buttons to open the modal on click
+    button.addEventListener("click", function(event){ //adds an events listener to the buttons to open the modal on click
+        event.preventDefault();
         showModal (pokemon);
     });
 }
@@ -61,7 +62,7 @@ function addTypeOption(type) { //
     let selectType = document.querySelector("#types-select"); //finds the first types-select and defines the selectType variable
     let typeOption = document.createElement('option'); //creates an option element for the dropdown 
     typeOption.setAttribute("value", type.url); // adds the type options to the dropdown 
-    typeOption.innerText = type.name; //adds inner text to the dropdown
+    typeOption.innerText = type.name.charAt(0).toUpperCase() + type.name.slice(1); //adds inner text to the dropdown
 
     selectType.appendChild(typeOption); //appends the typeOption to the selectType element
 }   
@@ -70,7 +71,7 @@ function addAbilityOption(ability) { //
     let selectAbility = document.querySelector("#ability-select"); //**finds the first types-select and defines the selectType variable
     let abilityOption = document.createElement('option'); //creates an option element for the dropdown 
     abilityOption.setAttribute("value", ability.url); // adds the type options to the dropdown 
-    abilityOption.innerText = ability.name; //adds inner text to the dropdown
+    abilityOption.innerText = ability.name.charAt(0).toUpperCase() + ability.name.slice(1); //adds inner text to the dropdown
 
     selectAbility.appendChild(abilityOption); //appends the typeOption to the selectType element
 }   
@@ -79,8 +80,14 @@ function addGenerationOption(generation) { //
     let selectGeneration = document.querySelector("#evolution"); //**finds the first types-select and defines the selectType variable
     let generationOption = document.createElement('span'); //creates an option element for the dropdown 
     let link = document.createElement("a");
+   
     link.setAttribute("href", generation.url); // adds the type options to the dropdown 
     link.innerText = generation.name; //adds inner text to the dropdown
+
+    link.addEventListener('click', function (event){
+        event.preventDefault();
+        console.log(event.target.href)
+    });
 
     generationOption.appendChild(link);
 
@@ -105,7 +112,7 @@ function loadList() { //
         console.error(e); //console logs the error
     });
 }
-
+/** Function definitions before function */
 function loadTypesList() { //loads the list of types from the type api
     let selectType = document.querySelector("#types-select"); //creates an element out of the  types-select id
     selectType.addEventListener('change',function(select){ //adds an event listener that changes upon select
@@ -152,7 +159,7 @@ function loadAbilityList() { //loads the list of types from the type api
 
 function loadGenerationList() { //loads the list of types from the type api
     let selectGeneration = document.querySelector("#evolution");
-    selectGeneration.addEventListener('show.bs.dropdown', function(div){
+    selectGeneration.addEventListener('span', function(div){
         loadPokemonGeneration(div.target.value);
     });
 
@@ -291,7 +298,7 @@ function loadDetails(item) { //
             typeElement.innerText = "Type: " + pokemon.types; //defines inner text for the type  element
 
             let abilityElement = document.createElement ('div');
-            abilityElement.innerText = "Ability: " + pokemon.abilities;
+            abilityElement.innerText = "Ability: " + pokemon.abilities; 
 
        
         modalContent.appendChild(pokemonImage); //appends images to the content (modal body)
@@ -321,7 +328,20 @@ modalContainer.addEventListener('click', (e)=>{ //closes the modal on click
         hideModal();
     }
 });
-   
+ 
+let searchForm = document.querySelector('#search-form');
+
+searchForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let searchBox = document.querySelector('#search-box');
+    let searchTerm = searchBox.value;
+    pokemonList=pokemonList.filter(
+        (pokemon) => {
+
+        }
+    )
+});
+
 return { //returns the data of the functions// why is this necessary again?
     add: add,
     getAll: getAll,
@@ -338,4 +358,3 @@ return { //returns the data of the functions// why is this necessary again?
 };
 
 })();
-
