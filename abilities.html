@@ -4,7 +4,7 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,14 +38,15 @@
             </li>
 
             <li class="nav-item dropdown">
-                <div class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Generation
+                <div class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Generation
                 </div>
-                
+
                 <div id="evolution" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <div class="dropdown-item"></div>
+                    <div class="dropdown-item"></div>
                 </div>
-              </li>
+            </li>
         </ul>
 
         <form class="form-inline my-2 my-lg-0">
@@ -57,14 +58,14 @@
 
 <body>
     <div class="header-container">
-    <h1 class="header">Pokemon Abilities</h1>
+        <h1 class="header">Pokemon Abilities</h1>
     </div>
     <div align="center">
-    <select id="ability-select" class="form-select">
-        <option>Select an Ability</option>
-    </select>
-</div>
-    
+        <select id="ability-select" class="form-select">
+            <option>Select an Ability</option>
+        </select>
+    </div>
+
     <ul class="pokemon-list list-group"></ul>
 
     <div id="show-modal"></div>
@@ -92,13 +93,13 @@
         </div>
     </div>
     <!-- Scripts -->
-  
+
     <script src="js/promise-polyfill.js"></script>
     <script src="js/fetch.umd.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/jquery.js"></script>
-    <script src="js/move.js"></script>
-    <script src="js/pokeball.js"></script>
+    <!-- <script src="js/move.js"></script> -->
+    <!-- <script src="js/pokeball.js"></script> -->
 
 
 
@@ -112,14 +113,14 @@
     </script>
 
 
-<script>
-    pokemonRepository.loadGenerationList().then(function () {
-        pokemonRepository.getAll().forEach(function (generation) {
-            pokemonRepository.addListItem(generation);
+    <!-- <script>
+        pokemonRepository.loadGenerationList().then(function () {
+            pokemonRepository.getAll().forEach(function (generation) {
+                pokemonRepository.addListItem(generation);
+            });
         });
-    });
 
-</script>
+    </script> -->
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"
