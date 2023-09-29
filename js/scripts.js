@@ -329,6 +329,29 @@ let pokemonRepository = (function () { //creates an Iife to "protect" variables 
         }
     });
 
+    // search for a pokemon
+    const searchbar = document.querySelector("#search-bar");
+    searchbar.addEventListener("input", function () {
+        pokemonRepository.filterSearch(searchbar);
+    });
+
+    //filter search to find pokemon
+    function filterSearch(searchbar) {
+        const filterValue = searchbar.value.toLowerCase();
+
+        // filter the pokemonList array based on the filterValue
+        const filteredPokemon = pokemonList.filter(function (pokemon) {
+            return pokemon.name.toLowerCase().indexOf(filterValue) > -1;
+        });
+
+        // update the displayed list of Pokemon based on the filtered results
+        const pokemonListElement = document.querySelector(".pokemon-list");
+        pokemonListElement.innerHTML = "";
+        filteredPokemon.forEach(function (pokemon) {
+            pokemonRepository.addListItem(pokemon);
+        });
+    }
+
     // let searchForm = document.querySelector('#search-form');
 
     // searchForm.addEventListener('submit', (e) => {
@@ -354,6 +377,7 @@ let pokemonRepository = (function () { //creates an Iife to "protect" variables 
         loadPokemonAbility: loadPokemonAbility,
         loadGenerationList: loadGenerationList,
         loadPokemonGeneration: loadPokemonGeneration,
+        filterSearch: filterSearch,
 
     };
 

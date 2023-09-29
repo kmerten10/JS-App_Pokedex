@@ -38,33 +38,34 @@
             </li>
 
             <li class="nav-item dropdown">
-                <div class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Generation
+                <div class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Generation
                 </div>
-                
+
                 <div id="evolution" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <div class="dropdown-item"></div>
+                    <div class="dropdown-item"></div>
                 </div>
-              </li>
+            </li>
 
         </ul>
 
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form id="search-form" class="form-inline my-2 my-lg-0">
+            <input id="search-bar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
 </nav>
 
 <body>
-<div class="header-container">
-    <h1 class="header">Pokemon Types</h1>
-</div>
+    <div class="header-container">
+        <h1 class="header">Pokemon Types</h1>
+    </div>
     <div align="center">
-    <select id="types-select" class="form-select">
-        <option >Select a Type</option>
-    </select>
-</div>
+        <select id="types-select" class="form-select">
+            <option>Select a Type</option>
+        </select>
+    </div>
     <ul class="pokemon-list list-group"></ul>
 
     <div id="show-modal"></div>
@@ -93,7 +94,7 @@
 
 
     <!-- Scripts -->
-  
+
     <script src="js/promise-polyfill.js"></script>
     <script src="js/fetch.umd.js"></script>
     <script src="js/scripts.js"></script>
@@ -109,14 +110,14 @@
     </script>
 
 
-<script>
-    pokemonRepository.loadGenerationList().then(function () {
-        pokemonRepository.getAll().forEach(function (generation) {
-            pokemonRepository.addListItem(generation);
+    <script>
+        pokemonRepository.loadGenerationList().then(function () {
+            pokemonRepository.getAll().forEach(function (generation) {
+                pokemonRepository.addListItem(generation);
+            });
         });
-    });
 
-</script>
+    </script>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"
