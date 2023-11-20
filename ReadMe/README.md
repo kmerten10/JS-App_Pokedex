@@ -26,3 +26,6 @@ Using text animations to spark interest and keep users engaged
 1. Open project in VSCode
 2. Ensure LiveServer is integrated
 3. Right click and select View with LiveServer
+
+## Project Link:
+Github: https://github.com/kmerten10/JS-App_Pokedex.git
